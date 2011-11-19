@@ -7,13 +7,12 @@ xml-grep 0.01 beta
 
 ## DESCRIPTION
 
-CSSセレクターでgrepします。「Mojo::DOM」を
-ベースにしていますので、
-
-[Mojo::DOM]
-[Mojo::DOM]:http://search.cpan.org/~sri/Mojolicious/lib/Mojo/DOM.pm
+CSSセレクターでgrepします。「Mojo::DOM」をベースにしていますので、[Mojo::DOM]が対応してる
+セレクタが利用可能です。
 
 Perl v5.10.1以上が必要です。もし古い場合は、アップグレードするか、perlbrewでググってください。
+
+[Mojo::DOM]:http://search.cpan.org/~sri/Mojolicious/lib/Mojo/DOM.pm
 
 ### EXAMPLE
 
