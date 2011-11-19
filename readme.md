@@ -1,4 +1,4 @@
-mojo-checkbot 0.01 beta
+xml-grep 0.01 beta
 ---------------
 
 ## SYNOPSIS
