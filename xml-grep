@@ -1,0 +1,55 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use File::Basename 'dirname';
+use File::Spec;
+use Mojo::Asset::File;
+use Mojo::DOM;
+use File::Find;
+    
+    our $VERSION = '0.01';
+
+    my $dir         = $ARGV[0];
+    my $selector    = $ARGV[1];
+    
+    find(sub {
+        if (-f $File::Find::name) {
+            my @array = treat_file($File::Find::name, $selector);
+            for my $line (@array) {
+                $line = Encode::encode('utf-8', $line);
+                print "$File::Find::name\: $line";
+                print "\n";
+            }
+        }
+    }, $dir);
+    
+    sub treat_file {
+        my ($file, $selector) = @_;
+        my $fh = Mojo::Asset::File->new(path => $file);
+        my $content = $fh->slurp;
+        my $encode = guess_encoding($content) || 'utf-8';
+        $content = Encode::decode($encode, $content);
+        my $dom = Mojo::DOM->new($content);
+        my @ret = ();
+        $dom->find($selector)->each(sub {
+            my $dom = shift;
+            my $agry = $dom->to_xml;
+            $agry =~ s{\s+}{ }g;
+            $agry = substr($agry, 0, 100);
+            push(@ret, $agry);
+        });
+        return @ret;
+    }
+    
+    sub guess_encoding {
+        my $content = shift;
+        my $charset;
+        my $head = ($content =~ qr{<head>(.+)</head>}is)[0];
+        my $dom = Mojo::DOM->new($head);
+        $dom->find('meta[http\-equiv=Content-Type]')->each(sub{
+            my $meta_dom = shift;
+            $charset = ($meta_dom->{content} =~ qr{; ?charset=([^;\$]+)})[0];
+        });
+        return $charset;
+    }
