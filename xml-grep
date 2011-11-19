@@ -34,10 +34,10 @@ use File::Find;
         my @ret = ();
         $dom->find($selector)->each(sub {
             my $dom = shift;
-            my $agry = $dom->to_xml;
-            $agry =~ s{\s+}{ }g;
-            $agry = substr($agry, 0, 100);
-            push(@ret, $agry);
+            my $ugly = $dom->to_xml;
+            $ugly =~ s{\s+}{ }g;
+            $ugly = substr($ugly, 0, 100);
+            push(@ret, $ugly);
         });
         return @ret;
     }
