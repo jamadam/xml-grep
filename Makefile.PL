@@ -10,5 +10,6 @@ WriteMakefile(
   VERSION_FROM => 'xml-grep',
   AUTHOR       => 'jamadam <sugama@jamadam.com>',
   PREREQ_PM    => {'Mojolicious' => '2.27'},
-  test         => {TESTS => 't/*.t'}
+  test         => {TESTS => 't/*.t'},
+  EXE_FILES    => ['xml-grep'],
 );
