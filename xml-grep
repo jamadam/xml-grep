@@ -2,8 +2,6 @@
 use strict;
 use warnings;
 use utf8;
-use File::Basename 'dirname';
-use File::Spec;
 use Mojo::Asset::File;
 use Mojo::DOM;
 use File::Find;
