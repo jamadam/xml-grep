@@ -11,6 +11,11 @@ use File::Find;
     my $dir         = $ARGV[0];
     my $selector    = $ARGV[1];
     
+    if ($ARGV[0] eq '-v') {
+        print "xml-grep version $VERSION\n";
+        exit;
+    }
+    
     find(sub {
         if (-f $File::Find::name) {
             my @array = treat_file($File::Find::name, $selector);
