@@ -5,16 +5,23 @@ use utf8;
 use Mojo::Asset::File;
 use Mojo::DOM;
 use File::Find;
+use Getopt::Long 'GetOptionsFromArray';
     
     our $VERSION = '0.02';
-
-    my $dir         = $ARGV[0];
-    my $selector    = $ARGV[1];
     
-    if ($ARGV[0] eq '-v') {
+    GetOptions(
+        \my %options,
+        'substr=i',
+        'version',
+    );
+    
+    if ($options{version}) {
         print "xml-grep version $VERSION\n";
         exit;
     }
+
+    my $dir         = $ARGV[0];
+    my $selector    = $ARGV[1];
     
     find(sub {
         if (-f $File::Find::name) {
@@ -39,7 +46,9 @@ use File::Find;
             my $dom = shift;
             my $ugly = $dom->to_xml;
             $ugly =~ s{\s+}{ }g;
-            $ugly = substr($ugly, 0, 100);
+            if ($options{substr}) {
+                $ugly = substr($ugly, 0, $options{substr});
+            }
             push(@ret, $ugly);
         });
         return @ret;
