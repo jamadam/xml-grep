@@ -7,7 +7,7 @@ use Mojo::DOM;
 use File::Find;
 use Getopt::Long 'GetOptionsFromArray';
     
-    our $VERSION = '0.02';
+    our $VERSION = '0.03';
     
     GetOptions(
         \my %options,
@@ -24,8 +24,9 @@ use Getopt::Long 'GetOptionsFromArray';
     my $selector    = $ARGV[1];
     
     find(sub {
-        if (-f $File::Find::name) {
-            my @array = treat_file($File::Find::name, $selector);
+        my $file = $_;
+        if (-f $file) {
+            my @array = treat_file($file, $selector);
             for my $line (@array) {
                 $line = Encode::encode('utf-8', $line);
                 print "$File::Find::name\: $line";

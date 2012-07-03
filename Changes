@@ -1,4 +1,7 @@
 Revision history for mojo-checkbot
 
+0.03 2012/07/03
+  - Fixed bug on cwd treating
+
 0.01 2011/11/19
   - initial release
