@@ -7,25 +7,44 @@ use Mojo::DOM;
 use File::Find;
 use Getopt::Long 'GetOptionsFromArray';
     
-    our $VERSION = '0.03';
+    our $VERSION = '0.04';
     
     GetOptions(
         \my %options,
         'substr=i',
         'version',
+        'help',
     );
     
     if ($options{version}) {
         print "xml-grep version $VERSION\n";
         exit;
     }
+    
+    if ($options{help}) {
+        print <<'EOF';
+usage: xml-grep [OPTIONS] $selector $file_pattern
 
-    my $dir         = $ARGV[0];
-    my $selector    = $ARGV[1];
+Example: xml-grep 'a[href]' *.html
+
+These options are available:
+
+    -s, --substr    Length for resulted strings to shown
+    -v, --version   Version information of this program
+    -h, --help      Shows usage of this program
+
+EOF
+        
+        exit;
+    }
+
+    my $selector        = $ARGV[0];
+    my $file_pattern    = $ARGV[1] || '';
+    $file_pattern =~ s{\*}{\.\+}g;
     
     find(sub {
         my $file = $_;
-        if (-f $file) {
+        if (-f $file && $file =~ qr/$file_pattern/) {
             my @array = treat_file($file, $selector);
             for my $line (@array) {
                 $line = Encode::encode('utf-8', $line);
@@ -33,7 +52,7 @@ use Getopt::Long 'GetOptionsFromArray';
                 print "\n";
             }
         }
-    }, $dir);
+    }, './');
     
     sub treat_file {
         my ($file, $selector) = @_;
