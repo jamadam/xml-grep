@@ -1,9 +1,9 @@
-xml-grep 0.01 beta
+xml-grep
 ---------------
 
 ## SYNOPSIS
     
-    xml-grep 'DIR' 'CSS Selector'
+    xml-grep 'CSS Selector'
 
 ## DESCRIPTION
 
