@@ -7,22 +7,24 @@ use Test::Mojo;
 use utf8;
 use Data::Dumper;
 use Cwd;
+use File::Basename 'dirname';
 
 	use Test::More tests => 3;
-	my $dir = cwd . '/t/dir';
+
+    chdir(File::Spec->rel2abs(dirname(__FILE__)));
 	
-	is `./xml-grep $dir '.testClass'`, <<"EOF";
-$dir/index.html: <div class="testClass">hoge</div>
-$dir/index2.html: <div class="testClass">hoge</div>
+	is `../xml-grep '.testClass' *.html`, <<"EOF";
+./dir/index.html: <div class="testClass">hoge</div>
+./dir/index2.html: <div class="testClass">hoge</div>
 EOF
 	
-	is `./xml-grep $dir '#testId'`, <<"EOF";
-$dir/index.html: <div id="testId">hoge</div>
-$dir/index2.html: <div id="testId">hoge</div>
+	is `../xml-grep '#testId' *.html`, <<"EOF";
+./dir/index.html: <div id="testId">hoge</div>
+./dir/index2.html: <div id="testId">hoge</div>
 EOF
 
-	is `./xml-grep $dir 'h3'`, <<"EOF";
-$dir/dir2/index.html: <h3>hoge</h3>
+	is `../xml-grep 'h3' *.html`, <<"EOF";
+./dir/dir2/index.html: <h3>hoge</h3>
 EOF
 
 1;
