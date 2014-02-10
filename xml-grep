@@ -64,7 +64,7 @@ EOF
         my @ret = ();
         $dom->find($selector)->each(sub {
             my $dom = shift;
-            my $ugly = $dom->to_xml;
+            my $ugly = $dom->to_string;
             $ugly =~ s{\s+}{ }g;
             if ($options{substr}) {
                 $ugly = substr($ugly, 0, $options{substr});
