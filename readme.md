@@ -16,9 +16,9 @@ Perl v5.10.1以上が必要です。もし古い場合は、アップグレー�
 
 ### EXAMPLE
 
-    $ xml−grep 'a[href]'
-    $ xml−grep 'tbody th'
-    $ xml−grep 'tbody th' \*.html
+    $ xml-grep 'a[href]'
+    $ xml-grep 'tbody th'
+    $ xml-grep 'tbody th' \*.html
 
 ## SEE ALSO
 
